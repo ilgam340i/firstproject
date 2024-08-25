@@ -1,0 +1,546 @@
+openapi: 3.0.3
+info:
+  title: Работа с пользователями
+  version: 1.0.0
+  description: Описание rest методов по работе с пользователями
+  contact:
+    name: Vadim Vagapov
+servers:
+  - url: 'http://localhost:8080'
+    description: 'Локальный сервер'
+paths:
+  /user-service/v1/user:
+    put:
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+        required: true
+      tags:
+        - userService
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Успешно изменили данные по пользователю
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Ошибка в запросе
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Пользователь не найден
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Внутренняя ошибка сервера
+      operationId: updateUser
+      summary: Изменить данные по пользователю
+    post:
+      requestBody:
+        description: Структура запроса для создания пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      tags:
+        - userService
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Успешное создание пользователя
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Ошибка в запросе
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Связанные документы не найдены
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Повторный запрос на создание того же пользователя
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Внутренняя ошибка сервера
+      operationId: createUser
+      summary: Создать Пользователя
+    delete:
+      tags:
+        - userService
+      parameters:
+        - name: userGuid
+          description: GUID пользователя
+          schema:
+            format: uuid
+            type: string
+          in: query
+        - name: version
+          description: Версия пользователя
+          schema:
+            format: int32
+            type: integer
+          in: query
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Успешно удалили пользователя
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Ошибка в запросе
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Пользователь не найден
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Внутренняя ошибка сервера
+      operationId: deleteUser
+      summary: Удалить пользователя
+  /user-service/v1/user/{userGuid}/:
+    parameters:
+      - name: userGuid
+        description: GUID пользователя
+        schema:
+          format: uuid
+          type: string
+        in: path
+        required: true
+    get:
+      tags:
+        - userService
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Успешно получили данные по пользователю
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Пользователь не найден
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtendedUserResponse'
+          description: Внутренняя ошибка сервера
+      operationId: getUser
+      summary: Получить данные пользователя
+  /user-service/v1/users:
+    post:
+      requestBody:
+        description: Получить список сотрудников
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListUserRequest'
+        required: true
+      tags:
+        - userService
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUserResponse'
+          description: Успешное получение списка сотрудников
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUserResponse'
+          description: Ошибка в запросе
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUserResponse'
+          description: Сотрудники не найдены
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUserResponse'
+          description: Внутренняя ошибка сервера
+      operationId: listUser
+      summary: Получить список пользователей
+components:
+  schemas:
+    ExtendedUserResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UserDataResponse'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+        validation:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationModel'
+    UserDataResponse:
+      required:
+        - userId
+        - userGuid
+        - version
+        - deleted
+        - user
+      type: object
+      properties:
+        userGuid:
+          format: uuid
+          description: GUID пользователя
+          type: string
+        version:
+          format: int32
+          description: Версия пользователя
+          type: integer
+        deleted:
+          description: Признак удаленного пользователя
+          type: boolean
+          example: 'false'
+        user:
+          $ref: '#/components/schemas/UserResponse'
+    UserResponse:
+      type: object
+      properties:
+        lastName:
+          description: Фамилия
+          maxLength: 50
+          type: string
+          example: Исянгулов
+        firstName:
+          description: Имя
+          maxLength: 50
+          type: string
+          example: Ильгам
+        middleName:
+          description: Отчество
+          maxLength: 50
+          type: string
+          example: Даянович
+        fullName:
+          description: ФИО
+          maxLength: 255
+          type: string
+          example: Исянгулов Ильгам Даянович
+        birthDate:
+          format: date
+          description: Дата рождения
+          type: string
+          example: "2000-10-12"
+        birthPlace:
+          description: Место рождения
+          maxLength: 500
+          type: string
+          example: г. Уфа
+        sex:
+          $ref: '#/components/schemas/Sex'
+        citizenshipCode:
+          description: Буквенный код страны гражданства
+          maxLength: 3
+          minLength: 3
+          type: string
+          example: RUS
+#        documents:
+#          type: array
+#          items:
+#            $ref: '#components/schemas/DocumentResponse'
+#        contacts:
+#          type: array
+#          items:
+#            $ref: '#components/schemas/ContactResponse'
+#        addresses:
+#          type: array
+#          items:
+#            $ref: '#components/schemas/AddressResponse'
+    Sex:
+      description: Пол, М - мужчина, F - женщина
+      enum:
+        - M
+        - F
+      type: string
+    ErrorResponse:
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          description: Строковый код ошибки
+          type: string
+          example: validation_error
+        detail:
+          $ref: '#/components/schemas/ErrorDetail'
+        message:
+          description: Сообщение об ошибке
+          type: string
+          example: Ошибка в запросе
+        shortMassage:
+          description: Краткое сообщение об ошибке
+          type: string
+          example: Поле обязательное для заполнения
+        level:
+          description: Тип ошибки
+          enum:
+            - ERROR
+            - WARN
+          type: string
+    ErrorDetail:
+      required:
+        - key
+          value
+      type: object
+      properties:
+        key:
+          description: Ключ
+          type: string
+          example: field
+        value:
+          description: Значение
+          type: string
+          example: userId
+    ValidationModel:
+      description: Ошибка валидации
+      required:
+        - fieldName
+        - errorType
+        - errorMessage
+      type: object
+      properties:
+        fieldName:
+          description: Имя поля
+          type: string
+        errorMessage:
+          description: Текст сообщения об ошибке
+          type: string
+        errorType:
+          description: Тип ошибки
+          enum:
+            - ERROR
+            - WARNING
+          type: string
+
+    UpdateUser:
+      type: object
+      required:
+        - userGuid
+        - version
+        - user
+      properties:
+        userGuid:
+          format: uuid
+          description: Guid пользователя
+          type: string
+        version:
+          description: Версия пользователя
+          type: integer
+          example: '0'
+        user:
+          $ref: '#/components/schemas/UserRequest'
+    UserRequest:
+      type: object
+      properties:
+        lastName:
+          description: Фамилия
+          maxLength: 50
+          type: string
+          example: Исянгулов
+        firstName:
+          description: Имя
+          maxLength: 50
+          type: string
+          example: Ильгам
+        middleName:
+          description: Отчество
+          maxLength: 50
+          type: string
+          example: Даянович
+        fullName:
+          description: ФИО
+          maxLength: 255
+          type: string
+          example: Исянгулов Ильгам Даянович
+        birthDate:
+          format: date
+          description: Дата рождения
+          type: string
+          example: "2000-10-12"
+        birthPlace:
+          description: Место рождения
+          maxLength: 500
+          type: string
+          example: г. Уфа
+        sex:
+          $ref: '#/components/schemas/Sex'
+        citizenshipCode:
+          description: Буквенный код страны гражданства
+          maxLength: 3
+          minLength: 3
+          type: string
+          example: RUS
+    UpdateUserRequest:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UpdateUser'
+    CreateUserRequest:
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateUser'
+    CreateUser:
+      required:
+        - user
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserRequest'
+    ListUserRequest:
+      description: Параметры фильтрации списка пользователей
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: '#/components/schemas/ListUserFilterSortPage'
+    ListUserFilterSortPage:
+      description: Параметры фильтрации списка пользователей
+      type: object
+      properties:
+        lastName:
+          description: Фамилия
+          maxLength: 50
+          type: string
+          example: Исянгулов
+        fullName:
+          description: ФИО
+          maxLength: 255
+          type: string
+          example: Исянгулов Ильгам Даянович
+        deleted:
+          description: признак удаленного пользователя
+          type: boolean
+          example: 'false'
+        orderBy:
+          type: array
+          items:
+            description: Сортировка
+            enum:
+              - full_name_asc
+              - full_name_desc
+              - last_name_asc
+              - last_name_desc
+            type: string
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      required:
+        - offset
+        - count
+      type: object
+      properties:
+        offset:
+          description: Отступ от первого значения сформированного по фильтрам списка
+          type: integer
+          example: '100'
+        count:
+          description: КОличество пользователей, переданных в ответе
+          type: integer
+          example: '30'
+        hasNextPage:
+          description: Наличие следующей странице в списке
+          type: boolean
+          example: 'true'
+    ListUserResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListUserDataResponse'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+    ListUserDataResponse:
+      type: object
+      properties:
+        userGuid:
+          format: uuid
+          description: GUID пользоваетеля
+          type: string
+        lastName:
+          description: Фамилия
+          maxLength: 50
+          type: string
+          example: Исянгулов
+        firstName:
+          description: Имя
+          maxLength: 50
+          type: string
+          example: Ильгам
+        middleName:
+          description: Отчество
+          maxLength: 50
+          type: string
+          example: Даянович
+        fullName:
+          description: ФИО
+          maxLength: 255
+          type: string
+          example: Исянгулов Ильгам Даянович
+        version:
+          description: Версия пользователя
+          type: integer
+          example: 1
+        deleted:
+          description: Признак удаленного пользователя
+          type: boolean
+          example: false
+
+
+
+
