@@ -1,156 +1,71 @@
 package ru.vagapov.userapi.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 /**
  * Данные по пользователю
  */
-@DynamicUpdate
-@Table(name = "USERS")
-@EqualsAndHashCode
-@Entity
-public class UserEntity{
+@Table
+public class UserEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
-
-    /**
-     * Версия
-     */
-    @Version
-    private Short version;
-
-    /**
-     * GUID пользователя
-     */
-    @Column(name = "user_guid")
-    private UUID userGuid;
-
-    /**
-     * Дата создания пользователя
-     */
-    @Column(name = "create_date")
-    private OffsetDateTime createDate;
-
-    /**
-     * Последнее изменение пользователя
-     */
-    @Column(name = "change_date")
-    private OffsetDateTime changeDate;
-
-    /**
-     * Признак удаленного пользователя
-     */
-    @Column(name = "deleted")
-    private Boolean deleted = false;
+    private Long id;
 
     /**
      * Имя
      */
-    @Column(name = "first_name")
+    @Column
     private String firstName;
 
     /**
      * Фамилия
      */
-    @Column(name = "last_name")
+    @Column
     private String lastName;
-
-    /**
-     * Отчество
-     */
-    @Column(name = "middle_name")
-    private String middleName;
-
-    /**
-     * ФИО
-     */
-    @Column(name = "full_name")
-    private String fullName;
 
     /**
      * День рождения
      */
-    @Column(name = "birth_date")
+    @Column
     private OffsetDateTime birthDate;
 
     /**
      * Место рождения
      */
-    @Column(name = "birth_place")
+    @Column
     private String birthPlace;
 
     /**
-     * Пол
+     * Место рождения
      */
-    @Column(name = "sex")
-    @Enumerated(EnumType.STRING)
-    private SexEntity sex;
+    @Column
+    private Byte age;
 
-    /**
-     * Буквенный код страны гражданство
-     */
-    @Column(name = "citizenship_code")
-    private String citizenshipCode;
+    public UserEntity(Long id,
+                      String firstName,
+                      String lastName,
+                      OffsetDateTime birthDate,
+                      String birthPlace,
+                      Byte age) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.birthPlace = birthPlace;
+        this.age = age;
+    }
 
-    public UUID getId() {
+    public UserEntity() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Short getVersion() {
-        return version;
-    }
-
-    public void setVersion(Short version) {
-        this.version = version;
-    }
-
-    public UUID getUserGuid() {
-        return userGuid;
-    }
-
-    public void setUserGuid(UUID userGuid) {
-        this.userGuid = userGuid;
-    }
-
-    public OffsetDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(OffsetDateTime createDate) {
-        this.createDate = createDate;
-    }
-
-    public OffsetDateTime getChangeDate() {
-        return changeDate;
-    }
-
-    public void setChangeDate(OffsetDateTime changeDate) {
-        this.changeDate = changeDate;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     public String getFirstName() {
@@ -169,22 +84,6 @@ public class UserEntity{
         this.lastName = lastName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public OffsetDateTime getBirthDate() {
         return birthDate;
     }
@@ -201,39 +100,11 @@ public class UserEntity{
         this.birthPlace = birthPlace;
     }
 
-    public SexEntity getSex() {
-        return sex;
+    public Byte getAge() {
+        return age;
     }
 
-    public void setSex(SexEntity sex) {
-        this.sex = sex;
-    }
-
-    public String getCitizenshipCode() {
-        return citizenshipCode;
-    }
-
-    public void setCitizenshipCode(String citizenshipCode) {
-        this.citizenshipCode = citizenshipCode;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", version=" + version +
-                ", userGuid=" + userGuid +
-                ", createDate=" + createDate +
-                ", changeDate=" + changeDate +
-                ", deleted=" + deleted +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", birthPlace='" + birthPlace + '\'' +
-                ", sex=" + sex +
-                ", citizenshipCode='" + citizenshipCode + '\'' +
-                '}';
+    public void setAge(Byte age) {
+        this.age = age;
     }
 }

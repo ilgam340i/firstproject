@@ -1,11 +1,11 @@
-package ru.vagapov.userapi.service;
+package ru.vagapov.userapi.dao;
 
 import ru.vagapov.userapi.entity.UserEntity;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface UserService {
+public interface UserDao {
 
     void createUsersTable();
 

@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: 1722239577546_initial_db_structure.sql
-      relativeToChangelogFile: true
-                

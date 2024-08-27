@@ -1,12 +1,15 @@
-package ru.vagapov.userapi.service.impl;
+package ru.vagapov.userapi.dao.Impl;
 
+import ru.vagapov.userapi.dao.UserDao;
 import ru.vagapov.userapi.entity.UserEntity;
-import ru.vagapov.userapi.service.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
+public class UserDaoJDBCImpl implements UserDao {
+    public UserDaoJDBCImpl() {
+
+    }
 
     public void createUsersTable() {
 
