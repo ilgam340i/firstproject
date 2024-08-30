@@ -36,7 +36,7 @@ tasks {
     }
 
     test {
-        useJUnitPlatform()
+        useJUnit()
         testLogging {
             events("passed", "skipped", "failed")
         }
