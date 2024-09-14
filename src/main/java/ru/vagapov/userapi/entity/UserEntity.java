@@ -107,4 +107,16 @@ public class UserEntity {
     public void setAge(Byte age) {
         this.age = age;
     }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", birthPlace='" + birthPlace + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
