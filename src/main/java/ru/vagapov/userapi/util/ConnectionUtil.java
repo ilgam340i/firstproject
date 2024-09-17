@@ -18,7 +18,16 @@ public class ConnectionUtil {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        if (connection!=null)
         return connection;
+        else {
+            try {
+                connection= DriverManager.getConnection(HOST,USERNAME,PASSWORD);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+          return connection;
     }
 }
 

@@ -13,11 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    public ConnectionUtil conUtil = new ConnectionUtil();
 
-
+    private ConnectionUtil conUtil = new ConnectionUtil();
     public UserDaoJDBCImpl() {
-            
     }
 
     public void createUsersTable() {
