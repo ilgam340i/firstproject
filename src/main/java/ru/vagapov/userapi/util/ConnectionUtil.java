@@ -9,21 +9,16 @@ public class ConnectionUtil {
     private static final String HOST ="jdbc:postgresql://localhost:5432/DATABASE";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "admin";
-    public static Connection connection;
+    public Connection connection;
 
-    public static Connection getConnection()  {
+    public  Connection getConnection()  {
         try {
             connection= DriverManager.getConnection(HOST,USERNAME,PASSWORD);
             System.out.println("ok");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
         return connection;
-
-
     }
 }
 

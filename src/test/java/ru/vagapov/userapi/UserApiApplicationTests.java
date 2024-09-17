@@ -15,7 +15,6 @@ public class UserApiApplicationTests {
 
     private final UserDao userDao = new UserDaoJDBCImpl();
     private final UserService userService = new UserServiceImpl(userDao);
-
     private final String testFirstName = "Ivan";
     private final String testLastName = "Ivanov";
     private final LocalDate testBirthDate = LocalDate.now();
