@@ -15,17 +15,17 @@ import java.util.List;
 public class UserApiApplication {
 
     public static void main(String[] args) throws SQLException {
-        UserDao userDao = new UserDaoJDBCImpl() {};
+        UserDao userDao = new UserDaoJDBCImpl() ;
         UserServiceImpl userService = new UserServiceImpl(userDao);
         userService.createUsersTable();
         userService.saveUser("Makaken", "Makak", LocalDate.parse("1995-09-10"), "Uchaly", (byte) 29);
-        System.out.println("User ? ?????? Makaken ???????? ? ???? ??????");
+        System.out.println("User with name Makaken has been added to database");
         userService.saveUser("Ilgam", "Isyangulov", LocalDate.parse("1995-09-10"), "Uchaly", (byte) 29);
-        System.out.println("User ? ?????? Ilgam ???????? ? ???? ??????");
+        System.out.println("User with name Ilgam has been added to database");
         userService.saveUser("Dayan", "Isyangulov", LocalDate.parse("1995-09-10"), "Uchaly", (byte) 29);
-        System.out.println("User ? ?????? Dayan ???????? ? ???? ??????");
+        System.out.println("User with name Dayan has been added to database");
         userService.saveUser("Zulfia", "Isyangulova", LocalDate.parse("1997-03-31"), "Mezhgore", (byte) 27);
-        System.out.println("User с именем Zulfia добавлен в базу  данных");
+        System.out.println("User with name Zulfia has been added to database");
         List<UserEntity> userList = userService.getAllUsers();
         for (UserEntity user : userList) {
             System.out.println(user);
