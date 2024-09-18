@@ -1,5 +1,6 @@
 package ru.vagapov.userapi.service.impl;
 
+import ru.vagapov.userapi.dao.Impl.UserDaoHibernateImpl;
 import ru.vagapov.userapi.dao.Impl.UserDaoJDBCImpl;
 import ru.vagapov.userapi.dao.UserDao;
 import ru.vagapov.userapi.entity.UserEntity;
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserDao userDao) {
     }
-    UserDao userDao = new UserDaoJDBCImpl();
+    UserDao userDao = new UserDaoHibernateImpl();
 
 
     public void createUsersTable() {
