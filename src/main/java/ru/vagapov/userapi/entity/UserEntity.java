@@ -1,16 +1,21 @@
 package ru.vagapov.userapi.entity;
 
+
+
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 /**
  * Данные по пользователю
  */
-@Table
+@Entity
+@Table(name="users")
 public class UserEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -29,7 +34,7 @@ public class UserEntity {
      * День рождения
      */
     @Column
-    private OffsetDateTime birthDate;
+    private LocalDate birthDate;
 
     /**
      * Место рождения
@@ -46,7 +51,7 @@ public class UserEntity {
     public UserEntity(Long id,
                       String firstName,
                       String lastName,
-                      OffsetDateTime birthDate,
+                      LocalDate birthDate,
                       String birthPlace,
                       Byte age) {
         this.id = id;
@@ -84,11 +89,11 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
-    public OffsetDateTime getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(OffsetDateTime birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
