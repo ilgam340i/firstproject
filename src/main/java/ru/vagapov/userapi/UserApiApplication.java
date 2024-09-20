@@ -27,12 +27,11 @@ public class UserApiApplication {
         System.out.println("User with name Dayan has been added to database");
         userService.saveUser("Zulfia", "Isyangulova", LocalDate.parse("1997-03-31"), "Mezhgore", (byte) 27);
         System.out.println("User with name Zulfia has been added to database");
-
-//        List<UserEntity> userList = userService.getAllUsers();
-//        for (UserEntity user : userList) {
-//            System.out.println(user);
-//        }
-//        userService.cleanUsersTable();
-//        userService.dropUsersTable();
+        List<UserEntity> userList = userService.getAllUsers();
+        for (UserEntity user : userList) {
+            System.out.println(user);
+        }
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
     }
 }
