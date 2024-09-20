@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
     public UserServiceImpl(UserDao userDao) {
         this.userDao=userDao;
 
@@ -43,9 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<UserEntity> getAllUsers() {
-        List<UserEntity> userEntityList = new ArrayList<>();
-        userDao.getAllUsers();
-        return userEntityList;
+
+        return  userDao.getAllUsers();
     }
 
     public void cleanUsersTable() {

@@ -1,9 +1,12 @@
 package ru.vagapov.userapi.entity;
 
-
-
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
+import org.hibernate.type.SqlTypes;
 
+import java.sql.Date;
+import java.sql.SQLData;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
@@ -11,41 +14,27 @@ import java.time.OffsetDateTime;
  * Данные по пользователю
  */
 @Entity
-@Table(name="users")
+@Table (name = "users")
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * Имя
-     */
-    @Column
+    @Column(name = "firstName")
     private String firstName;
 
-    /**
-     * Фамилия
-     */
-    @Column
+    @Column(name = "lastName")
     private String lastName;
 
-    /**
-     * День рождения
-     */
-    @Column
+
+    @Column(name = "birthDate")
     private LocalDate birthDate;
 
-    /**
-     * Место рождения
-     */
-    @Column
+    @Column(name = "birthPlace")
     private String birthPlace;
 
-    /**
-     * Место рождения
-     */
-    @Column
+    @Column(name = "age")
     private Byte age;
 
     public UserEntity(Long id,
